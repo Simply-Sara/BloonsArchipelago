@@ -26,6 +26,7 @@ namespace BloonsArchipelago.Utils
         public List<string> MapsUnlocked = new();
         public List<string> MonkeysUnlocked = new();
         public List<string> KnowledgeUnlocked = new();
+        public List<string> HeroesUnlocked = new();
 
         public MapDetails[] defaultMapList;
 
@@ -96,6 +97,9 @@ namespace BloonsArchipelago.Utils
                     else if (itemName.Contains("-KUnlock"))
                     {
                         KnowledgeUnlocked.Add(itemName.Replace("-KUnlock", ""));
+                    } else if (itemName.Contains("-HUnlock"))
+                    {
+                        HeroesUnlocked.Add(itemName.Replace("-HUnlock", ""));
                     }
                     else if (itemName == "Medal")
                     {

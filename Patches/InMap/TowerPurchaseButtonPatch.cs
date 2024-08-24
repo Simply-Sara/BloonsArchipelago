@@ -21,7 +21,14 @@ namespace BloonsArchipelago.Patches.InMap
                 }
                 else if (__instance.IsHero)
                 {
-                    return true;
+                    if (BloonsArchipelago.sessionHandler.HeroesUnlocked.Contains(__instance.towerModel.baseId))
+                    {
+                        return true;
+                    } else
+                    {
+                        __result = TowerPurchaseLockState.HasntBeenAquired;
+                        return false;
+                    }
                 }
                 else if (__instance.cost <= InGame.instance.GetCash())
                 {
