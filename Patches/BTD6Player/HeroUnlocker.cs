@@ -15,6 +15,10 @@ namespace BloonsArchipelago.Patches.BTD6Player
                 if (BloonsArchipelago.sessionHandler.HeroesUnlocked.Contains(towerId))
                 {
                     __result = true;
+                    if (!BloonsArchipelago.sessionHandler.LocationChecked(towerId))
+                    {
+                        BloonsArchipelago.sessionHandler.CompleteCheck(towerId);
+                    }
                 }
                 else
                 {
