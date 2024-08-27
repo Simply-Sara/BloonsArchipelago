@@ -21,6 +21,7 @@ namespace BloonsArchipelago.Patches.InMap
                 if (completedRound == 39 && new[] { "Medium", "Hard", "Impoppable", "Clicks" }.Contains(BloonsArchipelago.sessionHandler.currentMode))
                 {
                     BloonsArchipelago.sessionHandler.CompleteCheck(BloonsArchipelago.sessionHandler.currentMap + "-Easy");
+                    ModHelper.Msg<BloonsArchipelago>(BloonsArchipelago.sessionHandler.currentMap+"-Easy");
                 }
                 else if (completedRound == 59 && new[] { "Hard", "Impoppable", "Clicks" }.Contains(BloonsArchipelago.sessionHandler.currentMode))
                 {

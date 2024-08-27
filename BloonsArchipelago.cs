@@ -41,6 +41,7 @@ public class BloonsArchipelago : BloonsTD6Mod
 
         sessionHandler = new SessionHandler(url, port, slot, password);
     });
+    static readonly ModSettingBool showNotifications = true;
 
     public override void OnApplicationStart()
     {
@@ -75,7 +76,10 @@ public class BloonsArchipelago : BloonsTD6Mod
             string notification = sessionHandler.notifications[i];
             if (!sessionHandler.previousNotifications.Contains(notification))
             {
-                Game.instance.ShowMessage(notification, 5f, "Archipelago");
+                if (showNotifications)
+                {
+                    Game.instance.ShowMessage(notification, 5f, "Archipelago");
+                }
                 sessionHandler.notifications.Remove(notification);
                 sessionHandler.previousNotifications.Add(notification);
             }
