@@ -24,12 +24,12 @@ namespace BloonsArchipelago.Patches.KnowledgeMenu
                     }
                     else
                     {
-                        bool available = true;
+                        bool available = false;
                         foreach (string prereq in prereqs)
                         {
-                            if (!BloonsArchipelago.sessionHandler.LocationChecked(prereq + "-Tree"))
+                            if (BloonsArchipelago.sessionHandler.LocationChecked(prereq + "-Tree"))
                             {
-                                available = false;
+                                available = true;
                             }
                         }
                         if (available)
