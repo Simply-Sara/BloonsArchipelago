@@ -2,12 +2,12 @@ namespace BloonsArchipelago;
 
 public static class ModHelperData
 {
-    public const string WorksOnVersion = "44.0";
-    public const string Version = "0.4.3";
+    public const string WorksOnVersion = "50.0";
+    public const string Version = "0.4.4";
     public const string Name = "Bloons Archipelago";
 
     public const string Description = "A mod that connects Bloons to the Archipelago Multiworld Randomizer.";
 
-    public const string RepoOwner = "GamingInfinite"; // TODO add your github username hero, also in the download url in README.md
+    public const string RepoOwner = "Simply-Sara"; // TODO add your github username hero, also in the download url in README.md
     public const string RepoName = "BloonsArchipelago"; // TODO add your repo name here, also in the download url in README.md
 }

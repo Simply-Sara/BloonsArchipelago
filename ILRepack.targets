@@ -18,13 +18,12 @@
 
 	<!--When in Release mode, pack the libraries into the dll-->
 	<Target Name="ILRepacker" AfterTargets="Build" BeforeTargets="MoveDllToMods" DependsOnTargets="Definitons" Condition="'$(Configuration)' != 'Debug'">
-		<ItemGroup>
-			<LibraryPaths Include="$(BloonsTD6)\MelonLoader"/>
-			<LibraryPaths Include="$(BloonsTD6)\MelonLoader\Managed"/>
-			<LibraryPaths Include="$(BloonsTD6)\MelonLoader\net6"/>
-			<LibraryPaths Include="$(BloonsTD6)\MelonLoader\Il2CppAssemblies"/>
-			<LibraryPaths Include="$(NetCoreRoot)packs\Microsoft.NETCore.App.Ref\6.0.0\ref\net6.0"/>
-		</ItemGroup>
+		<!--Copy Btd6ModHelper.dll with its assembly name so ILRepack can find it-->
+		
+		
+		<PropertyGroup>
+			<LibraryPathsList>$(TargetDir);$(BloonsTD6)\MelonLoader;$(BloonsTD6)\MelonLoader\Managed;$(BloonsTD6)\MelonLoader\net6;$(BloonsTD6)\MelonLoader\Il2CppAssemblies;$(BloonsTD6)\Mods;$(NetCoreRoot)packs\Microsoft.NETCore.App.Ref\6.0.0\ref\net6.0</LibraryPathsList>
+		</PropertyGroup>
 
 		<ILRepack
                 Parallel="true"
@@ -32,7 +31,7 @@
                 TargetKind="Dll"
                 OutputFile="@(AssemblyFile)"
                 Internalize="false"
-                LibraryPath="@(LibraryPaths)"
+                LibraryPath="$(LibraryPathsList)"
         />
 
 	</Target>
