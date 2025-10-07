@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace BloonsArchipelago.Patches.HomeMenu
 {
-    [HarmonyPatch(typeof(MainMenu), nameof(MainMenu.Start))]
+    [HarmonyPatch(typeof(MainMenu), nameof(MainMenu.Awake))]
     internal class SaveNotificationsPatch
     {
         [HarmonyPostfix]

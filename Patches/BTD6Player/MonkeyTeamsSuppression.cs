@@ -12,4 +12,24 @@ namespace BloonsArchipelago.Patches.BTD6Player
             return false;
         }
     }
+
+    [HarmonyPatch(typeof(Btd6Player), nameof(Btd6Player.RotateMonkeyTeamsMap))]
+    internal class RotateMonkeyTeamsSuppression
+    {
+        [HarmonyPrefix]
+        private static bool Prefix()
+        {
+            return false;
+        }
+    }
+
+    [HarmonyPatch(typeof(Btd6Player), nameof(Btd6Player.GenerateNewMonkeyTeamsMap))]
+    internal class GenerateMonkeyTeamsSuppression
+    {
+        [HarmonyPrefix]
+        private static bool Prefix()
+        {
+            return false;
+        }
+    }
 }

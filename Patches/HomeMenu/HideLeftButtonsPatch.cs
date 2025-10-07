@@ -3,7 +3,7 @@ using Il2CppAssets.Scripts.Unity.UI_New.Main;
 
 namespace BloonsArchipelago.Patches.HomeMenu
 {
-    [HarmonyPatch(typeof(MainMenu), nameof(MainMenu.Start))]
+    [HarmonyPatch(typeof(MainMenu), nameof(MainMenu.Awake))]
     internal class HideLeftButtonsPatch
     {
         [HarmonyPostfix]
