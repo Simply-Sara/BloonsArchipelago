@@ -11,6 +11,7 @@ using BTD_Mod_Helper.Extensions;
 using System.IO;
 using System.Text.Json;
 using System.Collections.Generic;
+using System.Collections;
 
 using Il2CppAssets.Scripts.Unity.UI_New.InGame;
 using Il2CppAssets.Scripts.Unity;
@@ -29,6 +30,13 @@ public class BloonsArchipelago : BloonsTD6Mod
     public static SessionHandler sessionHandler = new();
 
     public static List<GameObject> vMapIndicators = new();
+
+    // Notification timing variables
+    private static float mapLoadTime = 0f;
+    private static bool mapLoaded = false;
+    private static bool notificationDelayActive = false;
+    private static float lastNotificationTime = 0f;
+    private static Queue<string> pendingNotifications = new Queue<string>();
 
     // Mod Settings; Used for Connection Purposes
     static readonly ModSettingString url = "archipelago.gg";
@@ -69,23 +77,57 @@ public class BloonsArchipelago : BloonsTD6Mod
 
     public override void OnUpdate()
     {
-        if (InGame.instance == null) return;
+        if (InGame.instance == null) 
+        {
+            // Reset map loaded state when not in game
+            mapLoaded = false;
+            mapLoadTime = 0f;
+            notificationDelayActive = false;
+            return;
+        }
 
-        for (int i = 0; i < sessionHandler.notifications.Count; i++)
+        // Check if map just loaded
+        if (!mapLoaded)
+        {
+            mapLoaded = true;
+            mapLoadTime = Time.time;
+            notificationDelayActive = true;
+        }
+
+        // Process new notifications and add them to pending queue
+        for (int i = sessionHandler.notifications.Count - 1; i >= 0; i--)
         {
             string notification = sessionHandler.notifications[i];
             if (!sessionHandler.previousNotifications.Contains(notification))
             {
-                if (showNotifications)
-                {
-                    Game.instance.ShowMessage(notification, 5f, "Archipelago");
-                }
-                sessionHandler.notifications.Remove(notification);
+                pendingNotifications.Enqueue(notification);
+                sessionHandler.notifications.RemoveAt(i);
                 sessionHandler.previousNotifications.Add(notification);
             }
             else
             {
-                sessionHandler.notifications.Remove(notification);
+                sessionHandler.notifications.RemoveAt(i);
+            }
+        }
+
+        // Show notifications with delays
+        if (notificationDelayActive && pendingNotifications.Count > 0)
+        {
+            float currentTime = Time.time;
+            
+            // Wait 1 second after map load before showing first notification
+            if (currentTime - mapLoadTime >= 1f)
+            {
+                // Check if enough time has passed since last notification (1 second delay between notifications)
+                if (currentTime - lastNotificationTime >= 1f)
+                {
+                    string notification = pendingNotifications.Dequeue();
+                    if (showNotifications)
+                    {
+                        Game.instance.ShowMessage(notification, 5f, "Archipelago");
+                    }
+                    lastNotificationTime = currentTime;
+                }
             }
         }
     }
